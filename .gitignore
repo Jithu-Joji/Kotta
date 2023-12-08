@@ -1,0 +1,15 @@
+# Node.js specific
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# macOS specific
+.DS_Store
+
+# Editor specific
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Environment variables (if applicable)
+.env
