@@ -30,7 +30,7 @@ exports.getExpensesForUser = async (req, res) => {
       const newExpense = new Expense({ title, amount, date, user: user });
       await newExpense.save();
   
-      console.log('Expense created:', newExpense); // Log the created expense
+      console.log('Expense created:', newExpense);
       res.status(201).json(newExpense);
     } catch (error) {
       console.error('Error creating expense:', error.message);

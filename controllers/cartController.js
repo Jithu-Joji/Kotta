@@ -195,8 +195,7 @@ async function searchItems(req, res) {
   }
   
   async function getMostBoughtItems(req, res) {
-    // Implementation for fetching most bought items
-    const limit = 6; // Fetch top 6 most bought items
+    const limit = 8; // Fetch top 8 most bought items
   
     try {
       // Fetch items with the highest purchase counts

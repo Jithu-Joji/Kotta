@@ -5,15 +5,15 @@ const User = require('../models/userModel');
 const secretKey = 'your-secret-key'; // Replace with your secret key
 
 function loginUser(req, res) {
-  const { email, password } = req.body;
-  User.findOne({ email })
+  const { username, password } = req.body;
+  User.findOne({ username })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ message: 'User not found' });
       }
 
       if (bcrypt.compareSync(password, user.password)) {
-        const token = jwt.sign({ email, userType: user.userType }, secretKey, {
+        const token = jwt.sign({ username, userType: user.userType }, secretKey, {
           expiresIn: '1h',
         });
         return res.status(200).json({
@@ -21,6 +21,8 @@ function loginUser(req, res) {
           userId: user._id, 
           userType: user.userType,
           groupName: user.groupName,
+          pname: user.pname,
+          pimgUrl: user.pimgUrl
         });
       } else {
         return res.status(402).json({ message: 'Invalid password' });
@@ -49,9 +51,9 @@ function authenticateUser(req, res, next) {
 }
 
 function changePassword(req, res) {
-  const { email, newPassword } = req.body;
+  const { username, newPassword } = req.body;
 
-  User.findOne({ email })
+  User.findOne({ username })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });

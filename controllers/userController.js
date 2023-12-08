@@ -3,17 +3,19 @@ const bcrypt = require('bcrypt');
 
 
 async function createUser(req, res) {
-  const { email, password, groupName, userType } = req.body;
+  const { username, password, groupName, userType, pname, pimgUrl } = req.body;
 
   try {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
 
     const newUser = new User({
-      email,
-      password: hashedPassword, // Save hashed password
+      username,
+      password: hashedPassword, 
       userType,
       groupName,
+      pname,
+      pimgUrl
     });
 
     const user = await newUser.save();
@@ -24,7 +26,7 @@ async function createUser(req, res) {
 }
 
 function getUserDetails(req, res) {
-  const userId = req.params.id; // Assuming you pass the user ID in the URL
+  const userId = req.params.id; 
 
   User.findById(userId)
     .then((user) => {
@@ -40,7 +42,7 @@ function getUserDetails(req, res) {
 
 function updateUserDetails(req, res) {
   const userId = req.params.id;
-  const updatedInfo = req.body; // New details to update
+  const updatedInfo = req.body; 
 
   User.findByIdAndUpdate(userId, updatedInfo, { new: true })
     .then((user) => {
@@ -69,12 +71,10 @@ function deleteUser(req, res) {
     });
 }
 
-// Other user-related functions...
 
 module.exports = {
   createUser,
   getUserDetails,
   updateUserDetails,
   deleteUser,
-  // Other exported functions...
 };
