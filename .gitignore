@@ -13,3 +13,6 @@ yarn-error.log
 
 # Environment variables (if applicable)
 .env
+
+# Local Netlify folder
+.netlify
