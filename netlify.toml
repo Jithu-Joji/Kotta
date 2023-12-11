@@ -1,9 +1,0 @@
-[build]
-  command = "npm i && npm start"
-  publish = "." # or specify the directory where the build output is located
-
-[dev]
-  command = "npm start"
-
-[deploy]
-  command = "npm start"    
