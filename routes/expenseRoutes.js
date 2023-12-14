@@ -10,4 +10,7 @@ router.get('/:userId/fetch', expenseController.getExpensesForUser);
 // Create a new expense for a specific user
 router.post('/:userId/submit', expenseController.createExpense);
 
+// Clear expenses based on the selected option
+router.post('/:userId/clear', expenseController.clearExpensesForUser);
+
 module.exports = router;
