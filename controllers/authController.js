@@ -83,5 +83,4 @@ module.exports = {
   loginUser,
   authenticateUser,
   changePassword,
-  // Other exported functions...
 };
