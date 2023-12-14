@@ -43,9 +43,9 @@ exports.getExpensesForUser = async (req, res) => {
     const { option } = req.body;
     console.log('Received user:', userId);
     console.log('Received option:', option);
+  
     try {
-      
-      let filteredExpenses = [];
+      let deletedExpenses;
   
       switch (option) {
         case 'previousMonths':
@@ -54,7 +54,7 @@ exports.getExpensesForUser = async (req, res) => {
           const currentMonth = currentDate.getMonth();
           const currentYear = currentDate.getFullYear();
   
-          filteredExpenses = await Expense.deleteMany({
+          deletedExpenses = await Expense.deleteMany({
             user: userId,
             $or: [
               { $expr: { $ne: [{ $year: '$date' }, currentYear] } },
@@ -73,7 +73,7 @@ exports.getExpensesForUser = async (req, res) => {
           const oneWeekAgo = new Date();
           oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
   
-          filteredExpenses = await Expense.deleteMany({
+          deletedExpenses = await Expense.deleteMany({
             user: userId,
             date: { $lt: oneWeekAgo },
           });
@@ -81,16 +81,17 @@ exports.getExpensesForUser = async (req, res) => {
   
         case 'everything':
           // Logic to clear all expenses
-          filteredExpenses = await Expense.deleteMany({ user: userId });
+          deletedExpenses = await Expense.deleteMany({ user: userId });
           break;
   
         default:
           break;
       }
   
-      res.status(200).json({ message: 'Expenses cleared successfully' });
+      res.status(200).json({ message: 'Expenses cleared successfully', deletedExpenses });
     } catch (error) {
       console.error('Error clearing expenses:', error.message);
       res.status(500).json({ message: 'Error clearing expenses' });
     }
   };
+  
