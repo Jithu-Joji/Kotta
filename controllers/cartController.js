@@ -195,13 +195,11 @@ async function searchItems(req, res) {
   }
   
   async function getMostBoughtItems(req, res) {
-    const limit = 8; // Fetch top 8 most bought items
   
     try {
       // Fetch items with the highest purchase counts
       const mostBoughtItems = await GroceryItem.find()
-        .sort({ purchaseCount: -1 })
-        .limit(limit);
+        .sort({ purchaseCount: -1 });
   
       res.status(200).json({ message: 'Most bought items fetched', items: mostBoughtItems });
     } catch (error) {
